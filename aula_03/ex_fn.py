@@ -1,149 +1,163 @@
 #!/usr/bin/python3
+## 
+## Usuário possa escolher os produto_s_ 
+## E ao final ter o valor total da compra;
+## Funcionalidades adicionais:
+##   remover um produto
+##   apresentar os ítens da cesta 
+##      se a lista tiver vazia apresentar a mensagem: "Cesta Vazia"
+##   se a cesta tiver com valor maior ou igual a 50:
+##      aplicar um desconto de 10%
 
 produtos = {
-  '1': ('Melão', 5.00),
-  '2': ('Uva', 8.00),
-  '3': ('Limão', 3.00),
-  '4': ('Pera', 4.90),
-  '5': ('Maçã', 5.60)
+    '1' : ('Melão', 5.00),
+    '2' : ('Uva'  ,  8.00),
+    '3' : ('Limão' , 3.00),
+    '4' : ('Pera' , 4.90),
+    '5' : ('Maçã' , 5.60),
 }
 
-##
-## Usuário possa escolher os produtos
-## E ao final ter o valor total da compra;
-## DESAFIO:
-##   remover um produto
-##   apresentar os itens da cesta
-##     se a lista tiver vazia apresentar a mensagem: "Cesta vazia"
-##   se a cesta tiver com valor maior ou igual a 50, aplicar um desconto de 10%
-##
-
-## Desafio: remover um produto
-def remover_fruta(cesta_de_frutas: list) -> None:
-  if len(cesta_de_frutas) > 0:
-    print("Escolha qual fruta deseja remover:")
-    
-    for indice in range(len(cesta_de_frutas)):
-      print(f" {indice + 1} - {cesta_de_frutas[indice][0]}\n")
-    
-    fruta_alvo = int(input("Fruta: "))
-
-    if (fruta_alvo - 1) in range(len(cesta_de_frutas)):
-      del cesta_de_frutas[(fruta_alvo - 1)]
-    else:
-      return ("Essa fruta não está na cesta\n")
-  else:
-    return ("Não há frutas na cesta\n")
-
-## Desafio: apresentar os itens da cesta
-def apresentar_cesta(cesta_de_frutas: list) -> None:
-  listagem_cesta = ""
-
-  if len(cesta_de_frutas) > 0:
-    for item in cesta_de_frutas:
-      listagem_cesta += (str(item) + ";")
-    return (f"{listagem_cesta}")
-  else:
-    return ("Cesta vazia")
-  
-
-# "Responsabilidades":
-## 1: Apresentar o menu principal
+## "Responsabilidades":
+### 1: Apresentar o Menu
 def menu_principal() -> None:
-  print ("Escolha a opção desejada: \n" \
-          " 1. Adicionar frutas\n" \
-          " 2. Remover fruta\n" \
-          " 3. Ver valor total\n" \
-          " 4. Listar itens da cesta\n" \
-          " 5. Sair\n")
+    print("Escolha a opção desejada: \n" \
+          " 1. Adicionar frutas \n" \
+          " 2. Ver cesta  \n" \
+          " 3. Remover Fruta \n" \
+          " 4. Ver valor total \n" \
+          " 5. Sair \n")
 
-## 2: Menu de frutas
-## 3: Adicionar fruta na cesta
-def adicionar_fruta(cesta_de_frutas: list, tabela_produtos = produtos) -> None:
-  fruta = input("Escolha a opção desejada:\n" \
-                " 1 - Melão\n" \
-                " 2 - Uva\n" \
-                " 3 - Limão\n" \
-                " 4 - Pera\n" \
-                " 5 - Maçã\n" \
-                " Opção: ")
+### 2: Menu de frutas
 
-  if fruta in tabela_produtos.keys():
-    cesta_de_frutas.append(tabela_produtos.get(fruta))
-    return
-  
-  return "Opção inválida"
+def retorna_indice_frutas(fruta: tuple) -> str:
+    for key in produtos: # list comprehension
+        if produtos[key] == fruta:
+            return key
 
-## 4: Consolidar o total
-def consolidar_cesta(cesta_de_frutas: list) -> None:
-  valor_total = sum([ x[1] for x in cesta_de_frutas])
+def menu_frutas(cesta_de_frutas: list = []) -> str:
+    # if lista não está vazia?
+    if len(cesta_de_frutas) != 0:
+        menu = "Escolha a opção desejada: \n"
 
-  # for item in cesta_de_frutas:
-  #   valor_total += item[1]
+        for fruta in cesta_de_frutas:
+            # descobrir o índice do dicionário
+            menu += f'{retorna_indice_frutas(fruta)} - {fruta[0]}\n'# montar a string
 
-  if valor_total >= 50:
-    valor_total = (valor_total * 0.9)
+        return input(menu)
+    
+    return input("Escolha a opção desejada: \n" \
+            " 1 - Melão \n" \
+            " 2 - Uva \n" \
+            " 3 - Limão \n" \
+            " 4 - Pera \n" \
+            " 5 - Maçã \n" \
+            "Opção: ")
 
-  return valor_total
 
-## 5: Sair do programa
-## 6: Apresentar a cesta e o valor total da compra
+### 3: Adicionar fruta na cesta
+def adicionar_fruta(cesta_de_frutas: list, tabela_produtos = produtos ) -> str: 
+    fruta = menu_frutas()
+
+    if fruta in tabela_produtos.keys():
+        cesta_de_frutas.append(tabela_produtos.get(fruta))
+        return f"Fruta : {tabela_produtos.get(fruta)} foi adicionada com Sucesso!"
+    return "Opção Inválida"
+
+
+### 4: Consolidar o Total
+def consolidar_cesta(cesta_de_frutas: list) -> float : 
+    return sum([ x[1] for x in cesta_de_frutas ]) # (Nome, Valor)
+#    valor_total = 0
+#    for item in cesta_de_frutas:
+#        valor_total += item[1]
+#    print(valor_total)
+
+
+### 5: Sair do programa
+### 6: Apresentar A cesta e Valor total da compra
 def sair(cesta_de_frutas: list) -> None:
-  print("Produtos: ", cesta_de_frutas)
-  consolidar_cesta(cesta_de_frutas)
-  exit()
+    print("Produtos:", cesta_de_frutas)
+    print("Total:", consolidar_cesta(cesta_de_frutas))
+    exit()
 
-### definir uma função que tem responsabilidade de organizar o fluxo
+### Funcionalidades adicionais
+def remover_fruta(cesta_de_frutas: list) -> str:
+    if len(cesta_de_frutas) != 0:
+        fruta = menu_frutas(cesta_de_frutas)
+        cesta_de_frutas.remove(produtos[fruta])
+        return f"Item {fruta} removido com sucesso\n"
+    return "A cesta está vazia."
+
+def apresentar_cesta(cesta_de_frutas: list) -> str:
+    cesta = "Cesta:\nFRUTA\tVALOR\n"
+    for item in cesta_de_frutas:
+        cesta+= f"{item[0]}\t{item[1]}\n"
+    cesta +=("-----------------------------\n")
+    cesta +=(f"TOTAL:\t{consolidar_cesta(cesta_de_frutas)}")
+    return cesta
+
+
+### definir uma função que tem reponsabilidade de organizar o fluxo
 def main() -> None:
-  lista_de_compras = []
-  opcoes = {
-    '1': adicionar_fruta,
-    '2': remover_fruta,
-    '3': consolidar_cesta,
-    '4': apresentar_cesta,
-    '5': sair
-  }
+    lista_de_compras = []
 
-  while True:
-    menu_principal()
+    opcoes = {
+        '1' : adicionar_fruta,
+        '2' : apresentar_cesta,
+        '3' : remover_fruta,
+        '4' : consolidar_cesta,
+        '5' : sair
+    }
+    
+    while True:
+        menu_principal() # apresentar as opções
 
-    opcao = input("Opção: ")
+        opcao = input("Opção: ") # seleciono a opção
 
-    if opcao in opcoes.keys():
-      print(opcoes[opcao](lista_de_compras))
-    else:
-      print("Opção inválida")
-
-# valor = 0
-# lista_de_compras = []
-
-# # Loop "infinito"
-# while True:
-#   print("Escolha a opção desejada: \n" \
-#         " 1. Adicionar frutas\n" \
-#         " 2. Ver valor total\n" \
-#         " 3. Sair\n" \
-#         )
-
-#   opcao = input("Opção: ")
-
-#   if (opcao == "1"):
-#     for fruta in lista_de_compras:
-#       valor += fruta[1]
-#     print(f"Valor total da cesta: {valor}\n")
-#   elif (opcao == "2"):
-#     for fruta in lista_de_compras:
-#       valor += fruta[1]
-#     print(f"Valor total da cesta: {valor}\n")
-#     valor = 0
-#   elif (opcao == "3"):
-#     print("Obrigado, volte sempre!\n")
-#     break
-#   else:
-#     print("Opção inválida\n")
-
-# print("Produtos: ", lista_de_compras)
-# print("Valor total: ", valor)
+        # tratamento de exceçoes 
+        if opcao in opcoes.keys(): # verifico se a opção é válida
+           print(opcoes[opcao](lista_de_compras)) # Executa a opção escolhida
+        else:
+            print("Opção Inválida") # apresenta mensagem de erro caso não for encontrada
 
 if __name__ == "__main__":
-  main()
+    main()
+
+## Loop "Infinito"
+
+#exit()
+#
+#
+#while True:   # sempre vai ser verdadeiro
+#    print("Escolha a opção desejada: \n" \
+#          " 1. Adicionar frutas \n" \
+#          " 2. Ver valor total \n" \
+#          " 3. Sair \n")
+#
+#    opcao = input("Opção: ")
+#
+#    if opcao == '1':
+#        fruta = input("Escolha a opção desejada: \n" \
+#              " 1 - Melão \n" \
+#              " 2 - Uva \n" \
+#              " 3 - Limão \n" \
+#              " 4 - Pera \n" \
+#              " 5 - Maçã \n" \
+#              "Opção: ")
+#        # Validar se as opçoes estão corretas 
+#        lista_de_compras.append(produtos.get(fruta))
+#    
+#    elif opcao == '2':
+#        # ver uma forma de apresentar o valor total
+#        for fruta in lista_de_compras:
+#            valor += fruta[1] # [ ("nome", XX.XX), .... ]
+#        print(f"Valor total da cesta: {valor}")
+#        valor = 0
+#    
+#    elif opcao == '3': 
+#        print("Obrigado, volte sempre!")
+#        break
+#
+#    else:
+#        print("Opção Inválida")
+#
