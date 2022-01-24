@@ -2,11 +2,11 @@ Notas do curso
 
 # Links úteis
 
-https://jitsi.4linux.com.br/testeJitsiMeet
-https://moodle-prod.4linux.com.br/login/4linux/login/index.html?errorcode=4
-https://rentry.co/8070
-Certificação de Python: PCAP
-Repositório das aulas: https://bitbucket.org/mi3mi/8070-python-fundamentals/src/main/
+- https://jitsi.4linux.com.br/testeJitsiMeet
+- https://moodle-prod.4linux.com.br/login/4linux/login/index.html?errorcode=4
+- https://rentry.co/8070
+- Certificação de Python: PCAP
+- Repositório das aulas: https://bitbucket.org/mi3mi/8070-python-fundamentals/src/main/
 
 # Roadmap do curso
 
@@ -635,3 +635,5 @@ $ deactivate
 ```
 
 - Alternativa ao pip: https://python-poetry.org/
+
+## Módulos úteis
