@@ -1,0 +1,7 @@
+nome;idade;cidade;estado
+joao;34;osasco;SP
+felipe;23;campinas;SP
+nadia;45;recife;PE
+Fernanda;33;Vila dos Remedios;SP
+Leonardo;33;Vila dos Remedios;SP
+Giovanni;33;Vila dos Remedios;SP

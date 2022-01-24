@@ -7,6 +7,7 @@ Notas do curso
 - https://rentry.co/8070
 - Certificação de Python: PCAP
 - Repositório das aulas: https://bitbucket.org/mi3mi/8070-python-fundamentals/src/main/
+- Dica para wiki: https://js.wiki/get-started
 
 # Roadmap do curso
 
@@ -625,6 +626,21 @@ dict_keys(['n1', 'n2'])
 10
 ```
 
+```python
+>>> def soma(x,y):
+...   """
+...     Recebe dois numeros inteiros e retorna a soma entre eles
+...     Argumentos:
+...       x: int -> primeiro numero da soma
+...       y: int -> segundo numero da soma
+...     Output:
+...       int
+...   """
+...   return x + y
+... 
+>>> help(soma)
+```
+
 # Módulos e pacotes
 
 ```bash
@@ -637,3 +653,111 @@ $ deactivate
 - Alternativa ao pip: https://python-poetry.org/
 
 ## Módulos úteis
+
+# Arquivos
+
+```text
+========= ===============================================================
+Character Meaning
+--------- ---------------------------------------------------------------
+'r'       open for reading (default)
+'w'       open for writing, truncating the file first
+'x'       create a new file and open it for writing
+'a'       open for writing, appending to the end of the file if it exists
+'b'       binary mode
+'t'       text mode (default)
+'+'       open a disk file for updating (reading and writing)
+'U'       universal newline mode (deprecated)
+========= ===============================================================
+```
+
+```python
+>>> buffer
+<_io.TextIOWrapper name='arquivo.txt' mode='rt' encoding='UTF-8'>
+>>> buffer.
+buffer.buffer          buffer.detach(         buffer.fileno(         buffer.line_buffering  buffer.newlines        buffer.readline(       buffer.seek(           buffer.truncate(       buffer.write_through
+buffer.close(          buffer.encoding        buffer.flush(          buffer.mode            buffer.read(           buffer.readlines(      buffer.seekable(       buffer.writable(       buffer.writelines(
+buffer.closed          buffer.errors          buffer.isatty(         buffer.name            buffer.readable(       buffer.reconfigure(    buffer.tell(           buffer.write(
+>>> conteudo = buffer.read()
+>>> conteudo
+'nome;idade;cidade;estado\njoao;34;osasco;SP\nfelipe;23;campinas;SP\nnadia;45;recife;PE\n'
+>>> conteudo.strip().split(';')
+['nome', 'idade', 'cidade', 'estado\njoao', '34', 'osasco', 'SP\nfelipe', '23', 'campinas', 'SP\nnadia', '45', 'recife', 'PE']
+>>> buffer.close()
+
+>>> conteudo
+['nome;idade;cidade;estado\n', 'joao;34;osasco;SP\n', 'felipe;23;campinas;SP\n', 'nadia;45;recife;PE\n']
+>>> conteudo[1].strip().split(';')
+['joao', '34', 'osasco', 'SP']
+>>> conteudo[2].strip().split(';')
+['felipe', '23', 'campinas', 'SP']
+>>> conteudo[3].strip().split(';')
+['nadia', '45', 'recife', 'PE']
+
+>>> import json
+>>> with open("arquivo.json") as f:
+...   conteudo = json.load(f)
+...
+>>> conteudo
+[{'chave': 'valor'}, {'outra_chave': 11}]
+>>> type(conteudo)
+<class 'list'>
+>>> type(conteudo[0])
+<class 'dict'>
+>>> type(conteudo[0].get('chave'))
+<class 'str'>
+
+>>> dic = { chr(x): x for x in range(65, 65+26) }
+>>> output = [dic for x in range(10)]
+>>> with open('log.json', 'x') as fp:
+...   json.dump(output, fp)
+...
+
+```
+
+```bash
+$ pip install pyyaml
+```
+
+```python
+>>> import yaml
+>>> with open('config.yml') as fp:
+...   config = yaml.safe_load(fp)
+... 
+>>> config
+{'chave': 'valor', 'campo': ['lista', 'de', 'itens'], 'pessoa': {'nome': 'Guilherme', 'idade': 33, 'estado': 'SP'}}
+>>> with open('novo_arquivo.yml', 'x') as fp:
+...   yaml.dump(config, fp)
+... 
+>>>
+```
+
+- buffer.readline
+  - Lê uma linha do arquivo por vez
+- buffer.readlines
+  - Retorna a lista de linhas
+
+# Python para APIs
+
+```bash
+$ pip install requests
+```
+
+```python
+>>> import requests
+>>> requests.get("http://viacep.com.br/ws/06223040/json")
+<Response [200]>
+>>> import requests
+>>> requests.get("https://uol.com.br/naoexite")
+<Response [404]>
+>>> resposta = requests.get("http://viacep.com.br/ws/06223040/json")
+>>> type(resposta)
+<class 'requests.models.Response'>
+>>> resposta.status_code
+200
+>>> resposta.json()
+{'cep': '06223-040', 'logradouro': 'Rua São José do Rio Pardo', 'complemento': '', 'bairro': 'Rochdale', 'localidade': 'Osasco', 'uf': 'SP', 'ibge': '3534401', 'gia': '4923', 'ddd': '11', 'siafi': '6789'}
+>>> resposta.url
+'http://viacep.com.br/ws/06223040/json'
+>>> resposta.close()
+```

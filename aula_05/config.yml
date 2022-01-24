@@ -1,0 +1,24 @@
+# json
+# {
+#   'chave': 'valor',
+#   'campo': ['lista', 'de', 'itens'],
+#   'pessoa': {
+#     'nome': 'nome',
+#     'idade': 22,
+#     'estado': 'SP'
+#   }
+# }
+
+# yaml
+## Formato de arquivos de configuracao
+## Elasticsearch, MongoDB, docker-compose, Kubernets / Manifests, GitLab CI
+
+chave: 'valor'
+campo:
+  - 'lista'
+  - 'de'
+  - 'itens'
+pessoa:
+  nome: 'Guilherme'
+  idade: 33
+  estado: 'SP'

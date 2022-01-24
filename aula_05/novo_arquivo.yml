@@ -1,0 +1,9 @@
+campo:
+- lista
+- de
+- itens
+chave: valor
+pessoa:
+  estado: SP
+  idade: 33
+  nome: Guilherme
