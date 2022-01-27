@@ -637,7 +637,7 @@ dict_keys(['n1', 'n2'])
 ...       int
 ...   """
 ...   return x + y
-... 
+...
 >>> help(soma)
 ```
 
@@ -723,12 +723,12 @@ $ pip install pyyaml
 >>> import yaml
 >>> with open('config.yml') as fp:
 ...   config = yaml.safe_load(fp)
-... 
+...
 >>> config
 {'chave': 'valor', 'campo': ['lista', 'de', 'itens'], 'pessoa': {'nome': 'Guilherme', 'idade': 33, 'estado': 'SP'}}
 >>> with open('novo_arquivo.yml', 'x') as fp:
 ...   yaml.dump(config, fp)
-... 
+...
 >>>
 ```
 
@@ -761,3 +761,16 @@ $ pip install requests
 'http://viacep.com.br/ws/06223040/json'
 >>> resposta.close()
 ```
+
+- https://datatracker.ietf.org/doc/html/rfc7807
+- https://datatracker.ietf.org/doc/html/rfc7807
+
+# Testes
+
+TDD -> Test Driven Development
+
+testes automatizados -> unitarios / aceitacao / integracao | testes de seguranca | testes de performance -> versiona a aplicacao
+
+# OOP
+
+- É possível criar um novo atributo para o objeto em tempo de execução
