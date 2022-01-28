@@ -775,3 +775,86 @@ testes automatizados -> unitarios / aceitacao / integracao | testes de seguranca
 
 - É possível criar um novo atributo para o objeto em tempo de execução
 - Validação de dados: https://pydantic-docs.helpmanual.io/
+
+## Classe abstrata
+
+```python
+import json
+from abc import ABCMeta, abstractmethod
+
+
+class Formatter(metaclass=ABCMeta):
+  def __init__(self, headers):
+    self.headers = headers
+
+  def validate_data_size(self, data):
+    if len(data) != len(self.headers):
+      raise ValueError('data size != headers size')
+
+  @abstractmethod
+  def format_header(self):
+    raise NotImplementedError
+
+  @abstractmethod
+  def format_footer(self):
+    raise NotImplementedError
+
+  @abstractmethod
+  def format_row(self, data):
+    raise NotImplementedError
+
+
+class CSVFormatter(Formatter):
+  def __init__(self, *args, delimiter=','):
+    super().__init__(*args)
+    self.delimiter = delimiter
+
+  def format_header(self):
+    return self.delimiter.join(self.headers)
+
+  def format_footer(self):
+    return ''
+
+  def format_row(self, data):
+    self.validate_data_size(data)
+    return self.delimiter.join(map(str, data))
+
+
+class JSONFormatter(Formatter):
+  def format_header(self):
+    return ''
+
+  def format_footer(self):
+    return ''
+
+  def format_row(self, data):
+    self.validate_data_size(data)
+    formatted = json.dumps(dict(zip(self.headers, data)))
+    return formatted
+```
+
+# Banco de dados
+
+- https://geoffruddock.com/sql-jinja-templating/
+
+```python
+>>> cursor.execute("SELECT * FROM users")
+<sqlite3.Cursor object at 0x7f40f1368e30>
+>>> res = cursor.execute("SELECT * FROM users")
+>>> cursor.fetch
+cursor.fetchall(   cursor.fetchmany(  cursor.fetchone(
+>>> cursor.fetch
+cursor.fetchall(   cursor.fetchmany(  cursor.fetchone(
+>>> cursor.fetchall()
+[(1, 'gcorrea', '123qwe123', 'guilherme correa')]
+>>> cursor.execute("SELECT * FROM users").fetchone()
+(1, 'gcorrea', '123qwe123', 'guilherme correa')
+>>> cursor.execute(sql_insert_into_users, ('lgiraldi', '123qwe123', 'leonardo giraldi'))
+<sqlite3.Cursor object at 0x7f40f1368e30>
+>>> cursor.execute("SELECT * FROM users").fetchone()
+(1, 'gcorrea', '123qwe123', 'guilherme correa')
+>>> cursor.execute("SELECT * FROM users").fetchall()
+[(1, 'gcorrea', '123qwe123', 'guilherme correa'), (2, 'lgiraldi', '123qwe123', 'leonardo giraldi')]
+>>> conn.commit()
+>>> conn.close()
+```
