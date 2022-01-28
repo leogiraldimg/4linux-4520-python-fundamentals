@@ -774,3 +774,4 @@ testes automatizados -> unitarios / aceitacao / integracao | testes de seguranca
 # OOP
 
 - É possível criar um novo atributo para o objeto em tempo de execução
+- Validação de dados: https://pydantic-docs.helpmanual.io/
