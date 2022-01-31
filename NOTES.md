@@ -858,3 +858,207 @@ cursor.fetchall(   cursor.fetchmany(  cursor.fetchone(
 >>> conn.commit()
 >>> conn.close()
 ```
+
+# Versionamento de código com o Git
+
+- [Site oficial](https://git-scm.com/)
+- [Pro Git](https://git-scm.com/book/en/v2)
+- [Understanding persistent vector](https://hypirion.com/musings/understanding-persistent-vector-pt-1)
+
+## Histórico
+
+## Estrutura de funcionamento
+
+### Identidade
+
+```console
+$ git config user.name "Leonardo Giraldi"
+$ git config user.email "leogiraldimg@gmail.com"
+$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[user]
+        name = Leonardo Giraldi
+        email = leogiraldimg@gmail.com
+
+$ git config --global user.name "XXXXXXX"
+```
+
+#### Diretório .git
+
+```console
+$ git init --initial-branch=main
+$ ls -la .git
+drwxrwxr-x   8 leogiraldimg leogiraldimg 4096 jan 28 17:59 .
+drwxrwxr-x  10 leogiraldimg leogiraldimg 4096 jan 31 14:01 ..
+drwxrwxr-x   2 leogiraldimg leogiraldimg 4096 jan 24 14:41 branches
+-rw-rw-r--   1 leogiraldimg leogiraldimg   24 jan 28 17:59 COMMIT_EDITMSG
+-rw-rw-r--   1 leogiraldimg leogiraldimg  288 jan 24 14:44 config
+-rw-rw-r--   1 leogiraldimg leogiraldimg   73 jan 24 14:41 description
+-rw-rw-r--   1 leogiraldimg leogiraldimg  123 jan 31 14:40 FETCH_HEAD
+-rw-rw-r--   1 leogiraldimg leogiraldimg   21 jan 24 14:44 HEAD
+drwxrwxr-x   2 leogiraldimg leogiraldimg 4096 jan 24 14:41 hooks
+-rw-rw-r--   1 leogiraldimg leogiraldimg 4261 jan 28 17:59 index
+drwxrwxr-x   2 leogiraldimg leogiraldimg 4096 jan 24 14:41 info
+drwxrwxr-x   3 leogiraldimg leogiraldimg 4096 jan 24 14:42 logs
+drwxrwxr-x 256 leogiraldimg leogiraldimg 4096 jan 24 14:42 objects
+-rw-rw-r--   1 leogiraldimg leogiraldimg   41 jan 27 17:51 ORIG_HEAD
+drwxrwxr-x   5 leogiraldimg leogiraldimg 4096 jan 24 14:44 refs
+
+$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/leogiraldimg/4linux-4520-python-fundamentals.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+        remote = origin
+        merge = refs/heads/main
+```
+
+### Workflow do git
+
+#### Não monitorado
+
+#### Modificado
+
+#### Staging
+
+#### Não modificado
+
+- Arquivo pertence ao repositório
+- Opções:
+  - Remover
+  - Modificar -> passa para "Modificado"
+
+### Branches
+
+### Operações básicas com Git
+
+```console
+$ git status
+No ramo master
+
+No commits yet
+
+Arquivos não monitorados:
+  (utilize "git add <arquivo>..." para incluir o que será submetido)
+        4520 - Python Fundamentals/
+        520/
+
+nada adicionado ao envio mas arquivos não registrados estão presentes (use "git add" to registrar)
+```
+
+```console
+$ git add NOME_DO_ARQUIVO.EXTENSÃO
+
+$ git rm --cached README.md # Retornar para "Não monitorado"
+```
+
+```console
+$ git commit
+
+1 Resumo do que foi feito no commit
+2
+3 Foi adicionado o primeiro commit com o template de aplicação python,
+4 cujo repositório se encontra no endereço https://....
+
+$ git log # Histórico de commits
+
+$ git restore ARQUIVO # Reverte alterações no arquivo
+
+$ git commit -m "doc: atualizando o readme" -m "descrição da atualização do arquivo README.md"
+
+$ git branch # Lista branches
+
+$ git switch -c outra_branch # Cria uma nova branch e troca para ela
+
+$ git switch main # Troca para a branch main
+
+$ git merge outra_branch # Mescla a branch indicada na branch atual. Por padrão obedece a ordem temporal dos commits
+
+$ git branch -d outra_branch # Deleta a branch indicada
+
+$ git checkout -b 'outra_branch' # Cria uma nova branch e troca para ela
+
+$ git merge --abort # Aborta o merge num cenário de conflito
+
+$ git log --oneline
+
+$ git checkout HASH_DO_COMMIT # Volto no tempo, para o snapshot do commit indicado
+
+$ git rebase -i HASH_DO_COMMIT # Organizar vários commits em 1 só, por exemplo # squash -> deixa os dois commits separados | pick -> junta os commits
+
+$ git reset --soft # Reseta o estado da head para aquele momento.
+$ git reset --hard # Reseta o estado da head para aquele momento. A nível de filesystem
+
+$ git tag -a v0.0.1 # Adiciona uma nova tag para o repositório. Tag é similar a um rótulo
+$ git tag -d v0.0.1 # Remove a tag indicada
+```
+
+- [Git Rebase](https://www.atlassian.com/br/git/tutorials/rewriting-history/git-rebase)
+
+- Chery pick
+
+  - "Pegar uma cereja de uma árvore"
+  - Pegar o commit, branch de um repo e colocar em outro repo
+  - Estrutura entre os repositórios deve ser similiar entre um e outro
+
+- Como criar um novo repositório:
+
+```console
+$ git remote add <nome_do_remote> https://link.do.remote/nome-do-repo.git # Adicionar um novo remote
+$ git remote add bitbucket https://mi3mi@bitbucket.org/mi3mi/teste.git
+
+$ git push bitbucket main # Submete a branch local indicada para o repositório remoto
+$ git push --tags bitbucket main # Submete tags para o repositório remoto
+```
+
+- Podemos adicionar repo via ssh ou https
+  - SSH
+    - Chave privada -> id_rsa
+      - Nunca deve ser publicada
+    - Chave pública -> id_rsa.pub
+      - Utilizada pelo repositório
+
+## Issues no Jira
+
+- Issues
+  - Título
+  - Descrição:
+    - O que precisa ser feito:
+      - Adicionar feature X no projeto Y
+    - Requisitos mínimos
+      - Descrição de regras específicas
+        - Negócio
+        - Conduta do repositório
+        - Qualidade
+    - Direcionamentos
+      - Ver wiki, consultar responsável Y
+    - Entregáveis
+      - Pull request com a feature testada e adicionada
+- Milestones
+  - Adicionar funcionalidade de forma de pagamento
+    - Micro tarefas (issues)
+  - Logar SSA
+  - Autorização Stateless...
+
+## Workflows
+
+### GitFlow
+
+- [Post originário](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Crítica ao GitFlow](https://www.youtube.com/watch?v=_w6TwnLCFwA)
+- Garantia de qualidade do SW são garantidas pelos rituais estabelecidos
+
+### Trunk Based
+
+- [Trunk Based Development Book](https://trunkbaseddevelopment.com/book/)
+- [Post do Martin Fowler](https://martinfowler.com/articles/branching-patterns.html)
+- Garantia de qualidade do SW são garantidas pelo CI/CD
