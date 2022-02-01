@@ -1062,3 +1062,26 @@ $ git push --tags bitbucket main # Submete tags para o repositório remoto
 - [Trunk Based Development Book](https://trunkbaseddevelopment.com/book/)
 - [Post do Martin Fowler](https://martinfowler.com/articles/branching-patterns.html)
 - Garantia de qualidade do SW são garantidas pelo CI/CD
+
+# Montydb
+
+```python
+>>> import montydb
+>>> montydb.
+montydb.ASCENDING         montydb.MontyClient(      montydb.MontyDatabase(    montydb.collection        montydb.cursor            montydb.errors            montydb.results           montydb.types
+montydb.CursorType(       montydb.MontyCollection(  montydb.base              montydb.configure         montydb.database          montydb.open_repo(        montydb.set_storage(      montydb.utils
+montydb.DESCENDING        montydb.MontyCursor(      montydb.client            montydb.current_repo(     montydb.engine            montydb.pin_repo(         montydb.storage           montydb.version_info
+>>> client = montydb.MontyClient('testedb')
+>>> client.
+client.address               client.codec_options         client.drop_database(        client.list_database_names(  client.write_concern
+client.close(                client.database_names(       client.get_database(         client.server_info(
+>>> client.get_database('user')
+MontyDatabase(MontyClient(repository='testedb', document_class=builtins.dict, storage_engine=MontyStorage(engine: 'FlatFileStorage')), 'user')
+>>> db = client.get_database('user')
+>>> db.users.insert_one({ 'username': 'gzcorrea', 'password': '123qwe123' })
+InsertOneResult(ObjectId('61f96b964e09665dd03b13d8'))
+>>> db.users.find()
+<montydb.cursor.MontyCursor object at 0x7f73dabfa0a0>
+>>> db.users.find_one()
+{'username': 'gzcorrea', 'password': '123qwe123', '_id': ObjectId('61f96b964e09665dd03b13d8')}
+```
