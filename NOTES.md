@@ -369,6 +369,11 @@ KeyError: 'nao-existe'
 dict_items([('idade', 56), ('linguagem', 'Python')])
 ```
 
+```python
+>>> dict([('teste', 'chave')])
+{'teste': 'chave'}
+```
+
 ## Pensar computacionalmente
 
 - Problema -> Problema de computação -> linguagem (python)
@@ -1085,3 +1090,26 @@ InsertOneResult(ObjectId('61f96b964e09665dd03b13d8'))
 >>> db.users.find_one()
 {'username': 'gzcorrea', 'password': '123qwe123', '_id': ObjectId('61f96b964e09665dd03b13d8')}
 ```
+
+# Named Tuples
+
+```python
+>>> registro = namedtuple('HistoricalDataLayout', ('offset', 'tipo', 'desc'))
+>>> t = registro(slice(2,10), str, 'data do pregão')
+>>> t
+HistoricalDataLayout(offset=slice(2, 10, None), tipo=<class 'str'>, desc='data do pregão')
+>>> t.offset
+slice(2, 10, None)
+>>> t.tipo
+<class 'str'>
+>>> t.desc
+'data do pregão'
+```
+
+# Flask
+
+- [Tutorial para o Flask](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+
+# Open API
+
+- [Open API Specification](https://oai.github.io/Documentation/specification.html)

@@ -1,0 +1,37 @@
+{% extends "base.html"  %}
+
+{% block titulo  %} B3 {% endblock %}
+
+
+{% block main  %} 
+
+ <table class="table" >
+   <thead class= "thead-dark">
+     <tr>
+      <th> CODNEG </th>
+      <th> DATPRG </th>
+      <th> NOMRES </th>
+      <th> PREABE </th>
+      <th> PREMAX </th>
+      <th> PREMED </th>
+      <th> PREMIN </th>
+      <th> PREULT </th>
+   </head>
+   <tbody>
+           {% for document in context %}
+      <tr>
+           <td> {{ document.CODNEG  }}  </td>
+           <td> {{ document.DATPRG }}  </td>
+           <td> {{ document.NOMRES }}  </td>
+           <td> {{ document.PREABE }}  </td>
+           <td> {{ document.PREMAX }}  </td>
+           <td> {{ document.PREMED }}  </td>
+           <td> {{ document.PREMIN }}  </td>
+           <td> {{ document.PREULT }}  </td>
+      </tr>
+           {% endfor  %}
+   </tbody>
+ </table>
+
+
+{% endblock %}
